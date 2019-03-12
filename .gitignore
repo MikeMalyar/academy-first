@@ -3,8 +3,8 @@
 *.ipr
 *.iws
 out/
+settings.gradle
 .idea_modules/
-*.gradle
 gradle/
 .gradle/
 gradlew
