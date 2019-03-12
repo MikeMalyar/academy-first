@@ -1,6 +1,7 @@
 import dataBase.DBConnection;
 import exceptions.DateParserException;
 import models.Person;
+import models.WorkingPlace;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;

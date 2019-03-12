@@ -30,7 +30,7 @@ public class DBConnection {
         connection = DriverManager.getConnection(URL, properties);
     }
 
-    private LinkedList<WorkingPlace> getWorkingPlaces(int person_id) throws SQLException , DateParserException {
+    public LinkedList<WorkingPlace> getWorkingPlaces(int person_id) throws SQLException , DateParserException {
         LinkedList<WorkingPlace> workingPlaces = new LinkedList<>();
 
         Statement statement = connection.createStatement();
@@ -116,7 +116,7 @@ public class DBConnection {
         return people;
     }
 
-    private void insertWorkingPlace(WorkingPlace place, int personId) throws SQLException {
+    public void insertWorkingPlace(WorkingPlace place, int personId) throws SQLException {
         Statement statement = connection.createStatement();
 
         String values = "";
@@ -171,7 +171,7 @@ public class DBConnection {
         }
     }
 
-    private void updateWorkingPlace(WorkingPlace place) throws SQLException {
+    public void updateWorkingPlace(WorkingPlace place) throws SQLException {
         Statement statement = connection.createStatement();
 
         String values = "";
@@ -214,6 +214,32 @@ public class DBConnection {
 
         for(WorkingPlace place : person.getWorkingPlaces()) {
             updateWorkingPlace(place);
+        }
+    }
+
+    public void deleteWorkingPlaceById(int placeId) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        statement.execute("delete from \"workingPlace\" where \"id\" = " + placeId);
+    }
+
+    public void deletePersonById(int personId) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        try {
+            LinkedList<WorkingPlace> places = getWorkingPlaces(personId);
+
+            places.forEach(p -> {
+                try {
+                    deleteWorkingPlaceById(p.getId());
+                }
+                catch (SQLException s) {}
+            });
+
+            statement.execute("delete from \"person\" where \"id\" = " + personId);
+        }
+        catch (DateParserException e) {
+
         }
     }
 
