@@ -1,0 +1,23 @@
+!!models.Company
+people:
+- address: London
+  birthdate: '2019-03-12'
+  courses: [!!models.Course 'Java', !!models.Course 'Python']
+  email: john_doe@gmail.com
+  id: 0
+  name: John
+  phoneNumber: +38 050 05 05 050
+  surname: Doe
+  workingPlaces:
+  - &id001 {begin: '2019-03-12', end: '2019-03-12', id: 0, jobPosition: ProjectManager,
+    title: SharpMinds}
+- address: London
+  birthdate: '2019-03-12'
+  courses: [!!models.Course 'Java', !!models.Course 'Python']
+  email: john_doe@gmail.com
+  id: 0
+  name: John
+  phoneNumber: +38 050 05 05 050
+  surname: Doe
+  workingPlaces:
+  - *id001

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<company>
+    <people>
+        <person>
+            <id>0</id>
+            <name>John</name>
+            <surname>Doe</surname>
+            <birthdate>2019-03-12</birthdate>
+            <address>London</address>
+            <phoneNumber>+38 050 05 05 050</phoneNumber>
+            <email>john_doe@gmail.com</email>
+            <courses>
+                <course>Java</course>
+                <course>Python</course>
+            </courses>
+            <workingPlaces>
+                <workingPlace>
+                    <id>0</id>
+                    <begin>2019-03-12</begin>
+                    <end>2019-03-12</end>
+                    <title>SharpMinds</title>
+                    <jobPosition>ProjectManager</jobPosition>
+                </workingPlace>
+            </workingPlaces>
+        </person>
+        <person>
+            <id>0</id>
+            <name>John</name>
+            <surname>Doe</surname>
+            <birthdate>2019-03-12</birthdate>
+            <address>London</address>
+            <phoneNumber>+38 050 05 05 050</phoneNumber>
+            <email>john_doe@gmail.com</email>
+            <courses>
+                <course>Java</course>
+                <course>Python</course>
+            </courses>
+            <workingPlaces>
+                <workingPlace>
+                    <id>0</id>
+                    <begin>2019-03-12</begin>
+                    <end>2019-03-12</end>
+                    <title>SharpMinds</title>
+                    <jobPosition>ProjectManager</jobPosition>
+                </workingPlace>
+            </workingPlaces>
+        </person>
+    </people>
+</company>
