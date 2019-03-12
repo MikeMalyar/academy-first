@@ -16,10 +16,10 @@ public class DataBaseTests {
 
             LinkedList<Person> people = connection.getPersons();
 
-            people.getFirst().setName("Joseph");
+            /*people.getFirst().setName("Joseph");
             connection.updatePerson(people.stream().filter(p -> p.getId() == 1).collect(Collectors.toList()).get(0));
 
-            people = connection.getPersons();
+            people = connection.getPersons();*/
 
             System.out.println(people);
         }
