@@ -37,16 +37,7 @@ public class Person {
 
     public Person() {
         courses = new LinkedList<>();
-
-        name = "John";
-        surname = "Doe";
-        birthdate = LocalDate.now();
-        address = "London";
         workingPlaces = new LinkedList<>();
-        phoneNumber = "+38 050 05 05 050";
-        email = "john_doe@gmail.com";
-        courses.add(Course.Java);
-        courses.add(Course.Python);
     }
 
     public Person(int id, String name, String surname, LocalDate birthdate, String address, String phoneNumber, String email, LinkedList<Course> courses, LinkedList<WorkingPlace> workingPlaces) {

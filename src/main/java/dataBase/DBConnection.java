@@ -130,6 +130,16 @@ public class DBConnection {
                 "values (" + values + ");";
 
         statement.execute(sql);
+
+        try {
+            LinkedList<WorkingPlace> places = getWorkingPlaces(personId);
+            places.sort(Comparator.comparing(WorkingPlace::getId).reversed());
+
+            place.setId(places.getFirst().getId());
+        }
+        catch (DateParserException de) {
+            de.printStackTrace();
+        }
     }
 
     public void insertPerson(Person person) throws SQLException {
@@ -167,7 +177,7 @@ public class DBConnection {
             person.setId(persons.getFirst().getId());
         }
         catch (DateParserException de) {
-
+            de.printStackTrace();
         }
     }
 
