@@ -27,7 +27,7 @@ public class WorkingPlace {
         begin = LocalDate.now();
         end = LocalDate.now();
         title = "";
-        jobPosition = JobPosition.Developer;
+        jobPosition = JobPosition.DEVELOPER;
     }
 
     public WorkingPlace(int id, LocalDate begin, LocalDate end, String title, JobPosition jobPosition) {

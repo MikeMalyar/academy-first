@@ -10,7 +10,7 @@
             <phoneNumber>+38 099 99 099 099</phoneNumber>
             <email>___@gmail.com</email>
             <courses>
-                <course>Java</course>
+                <course>JAVA</course>
             </courses>
             <workingPlaces>
                 <workingPlace>
@@ -18,7 +18,7 @@
                     <begin>2017-01-01</begin>
                     <end>2018-01-01</end>
                     <title>SoftServe</title>
-                    <jobPosition>Developer</jobPosition>
+                    <jobPosition>DEVELOPER</jobPosition>
                 </workingPlace>
             </workingPlaces>
         </person>

@@ -1,5 +1,5 @@
 package models;
 
 public enum JobPosition {
-    Developer, ProjectManager,
+    DEVELOPER, PROJECT_MANAGER,
 }

@@ -2,11 +2,11 @@
 people:
 - address: Ruska str, 287
   birthdate: '1999-07-05'
-  courses: [!!models.Course 'Java']
+  courses: [!!models.Course 'JAVA']
   email: ___@gmail.com
   id: 0
   name: Mike
   phoneNumber: +38 099 99 099 099
   surname: Malyarchuk
   workingPlaces:
-  - {begin: '2017-01-01', end: '2018-01-01', id: 0, jobPosition: Developer, title: SoftServe}
+  - {begin: '2017-01-01', end: '2018-01-01', id: 0, jobPosition: DEVELOPER, title: SoftServe}

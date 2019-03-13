@@ -1,5 +1,4 @@
-import dataBase.DBConnection;
-import exceptions.DateParserException;
+import dataBase.PersonDao;
 import models.Course;
 import models.JobPosition;
 import models.Person;
@@ -7,89 +6,80 @@ import models.WorkingPlace;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.LinkedList;
 
 public class DataBaseTests {
 
-    private Person generatePerson() throws DateParserException {
+    private Person generatePerson() {
         Person person = new Person();
         person.setName("Mike");
         person.setSurname("Malyarchuk");
-        person.setBirthdate("1999-07-05");
+        person.setBirthdate(LocalDate.now().withYear(1999).withMonth(7).withDayOfMonth(5));
         person.setAddress("Ruska str, 287");
         person.setPhoneNumber("+38 099 99 099 099");
         person.setEmail("___@gmail.com");
-        person.getCourses().add(Course.Java);
+        person.getCourses().add(Course.JAVA);
 
         return person;
     }
 
-    private WorkingPlace generateWorkingPlace() throws DateParserException {
+    private WorkingPlace generateWorkingPlace() {
         WorkingPlace place = new WorkingPlace();
-        place.setBegin("2017-01-01");
-        place.setEnd("2018-01-01");
+        place.setBegin(LocalDate.now().withYear(2017).withMonth(1).withDayOfMonth(1));
+        place.setEnd(LocalDate.now().withYear(2018).withMonth(1).withDayOfMonth(1));
         place.setTitle("SoftServe");
-        place.setJobPosition(JobPosition.Developer);
+        place.setJobPosition(JobPosition.DEVELOPER);
 
         return place;
     }
 
     @Test
     public void insertAndSelectTest() {
-        try {
-            DBConnection connection = new DBConnection();
+        PersonDao dao = new PersonDao();
 
-            WorkingPlace place = generateWorkingPlace();
-            Person person = generatePerson();
-            person.getWorkingPlaces().add(place);
+        WorkingPlace place = generateWorkingPlace();
+        Person expected = generatePerson();
+        expected.getWorkingPlaces().add(place);
 
-            connection.insertPerson(person);
+        dao.insert(expected);
 
-            LinkedList<Person> persons = connection.getPersons();
-            persons.sort(Comparator.comparing(Person::getId).reversed());
+        LinkedList<Person> persons = (LinkedList<Person>) dao.getAll();
+        persons.sort(Comparator.comparing(Person::getId).reversed());
 
-            Person person1 = persons.getFirst();
+        Person actual = persons.getFirst();
 
-            Assert.assertEquals(person1, person);
+        Assert.assertEquals(actual, expected);
 
-            connection.deletePersonById(person.getId());
-        }
-        catch (SQLException | DateParserException e) {
-            e.printStackTrace();
-        }
+        dao.deleteById(expected.getId());
     }
 
     @Test
     public void updateTest() {
-        try {
-            DBConnection connection = new DBConnection();
+        PersonDao dao = new PersonDao();
 
-            WorkingPlace place = generateWorkingPlace();
-            Person person = generatePerson();
-            person.getWorkingPlaces().add(place);
+        WorkingPlace place = generateWorkingPlace();
+        Person expected = generatePerson();
+        expected.getWorkingPlaces().add(place);
 
-            connection.insertPerson(person);
+        dao.insert(expected);
 
-            person.setName("Viktor");
-            person.setSurname("Pelepiak");
-            person.setBirthdate("1999-11-02");
+        expected.setName("Viktor");
+        expected.setSurname("Pelepiak");
+        expected.setBirthdate(LocalDate.now().withYear(1999).withMonth(11).withDayOfMonth(2));
 
-            connection.updatePerson(person);
+        dao.update(expected);
 
-            LinkedList<Person> persons = connection.getPersons();
-            persons.sort(Comparator.comparing(Person::getId).reversed());
+        LinkedList<Person> persons = (LinkedList<Person>) dao.getAll();
+        persons.sort(Comparator.comparing(Person::getId).reversed());
 
-            Person person1 = persons.getFirst();
+        Person actual = persons.getFirst();
 
-            Assert.assertEquals(person1, person);
+        Assert.assertEquals(actual, expected);
 
-            connection.deletePersonById(person.getId());
-        }
-        catch (SQLException | DateParserException e) {
-            e.printStackTrace();
-        }
+        dao.deleteById(expected.getId());
+
     }
 
 }

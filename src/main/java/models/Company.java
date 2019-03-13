@@ -1,20 +1,12 @@
 package models;
 
-import dateAdapter.LocalDateAdapterJson;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import exceptions.DeserializeException;
 import exceptions.FormatNotFoundException;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
+import serialization.JSONCompany;
+import serialization.XMLCompany;
+import serialization.YAMLCompany;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import java.io.*;
-import java.time.LocalDate;
 import java.util.*;
 
 @XmlRootElement
@@ -65,87 +57,27 @@ public class Company {
         return res;
     }
 
-    public void deserialize(String path) throws IOException, FormatNotFoundException, DeserializeException {
+    public void deserialize(String path) throws IOException, FormatNotFoundException {
         String flag = findFormat(path);
 
-        try {
-            switch (flag) {
-                case "xml":
-                    deserializeXML(path);
-                    break;
-                case "json":
-                    deserializeJSON(path);
-                    break;
-                case "yaml":
-                    deserializeYAML(path);
-                    break;
-                default:
-                    throw new FormatNotFoundException(path);
-            }
+
+        switch (flag) {
+            case "xml":
+                XMLCompany xml = new XMLCompany();
+                people = xml.deserialize(path).people;
+                break;
+            case "json":
+                JSONCompany json = new JSONCompany();
+                people = json.deserialize(path).people;
+                break;
+            case "yaml":
+                YAMLCompany yaml = new YAMLCompany();
+                people = yaml.deserialize(path).people;
+                break;
+            default:
+                throw new FormatNotFoundException(path);
         }
-        catch (JAXBException | IOException e)
-        {
-            throw new DeserializeException(flag, path);
-        }
-    }
 
-    public void serializeXML(String path) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(Company.class);
-        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        jaxbMarshaller.marshal(this, new File(path));
-    }
-
-    public void deserializeXML(String path) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(Company.class);
-        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        Company company = (Company) jaxbUnmarshaller.unmarshal(new File(path));
-        people = company.people;
-    }
-
-    public void serializeJSON(String path) throws IOException {
-        File file = new File(path);
-
-        FileWriter fw = new FileWriter(file);
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapterJson())
-                .create();
-
-        fw.write(gson.toJson(this));
-
-        fw.close();
-    }
-
-    public void deserializeJSON(String path) throws IOException {
-        File file = new File(path);
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapterJson())
-                .create();
-
-        Company company = gson.fromJson(new FileReader(file), Company.class);
-
-        people = company.getPeople();
-    }
-
-    public void serializeYAML(String path) throws IOException {
-        FileWriter fw = new FileWriter(new File(path));
-
-        Yaml yaml = new Yaml();
-
-        yaml.dump(this, fw);
-    }
-
-    public void deserializeYAML(String path) throws IOException {
-        File file = new File(path);
-
-        InputStream inputStream = new FileInputStream(file);
-
-        Yaml yaml = new Yaml(new Constructor(Company.class));
-
-        Company company = yaml.loadAs(inputStream, Company.class);
-        people = company.people;
     }
 
     @Override

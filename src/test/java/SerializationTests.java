@@ -1,9 +1,10 @@
 import exceptions.DateParserException;
-import exceptions.DeserializeException;
-import exceptions.FormatNotFoundException;
 import models.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import serialization.JSONCompany;
+import serialization.XMLCompany;
+import serialization.YAMLCompany;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,7 +20,7 @@ public class SerializationTests {
         person.setAddress("Ruska str, 287");
         person.setPhoneNumber("+38 099 99 099 099");
         person.setEmail("___@gmail.com");
-        person.getCourses().add(Course.Java);
+        person.getCourses().add(Course.JAVA);
 
         return person;
     }
@@ -29,7 +30,7 @@ public class SerializationTests {
         place.setBegin("2017-01-01");
         place.setEnd("2018-01-01");
         place.setTitle("SoftServe");
-        place.setJobPosition(JobPosition.Developer);
+        place.setJobPosition(JobPosition.DEVELOPER);
 
         return place;
     }
@@ -37,21 +38,22 @@ public class SerializationTests {
     @Test
     public void xmlTest() {
         try {
+            XMLCompany xml = new XMLCompany();
+
             WorkingPlace place = generateWorkingPlace();
             Person person = generatePerson();
             person.getWorkingPlaces().add(place);
 
-            Company company = new Company();
-            company.getPeople().add(person);
+            Company expected = new Company();
+            expected.getPeople().add(person);
 
-            Company company1;
+            Company actual;
 
-            company.serializeXML("src/test/resources/people.xml");
+            xml.serialize(expected, "src/test/resources/people.xml");
 
-            company1 = new Company();
-            company1.deserialize("src/test/resources/people.xml");
+            actual = xml.deserialize("src/test/resources/people.xml");
 
-            Assert.assertEquals(company, company1);
+            Assert.assertEquals(expected, actual);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -61,21 +63,22 @@ public class SerializationTests {
     @Test
     public void jsonTest() {
         try {
+            JSONCompany json = new JSONCompany();
+
             WorkingPlace place = generateWorkingPlace();
             Person person = generatePerson();
             person.getWorkingPlaces().add(place);
 
-            Company company = new Company();
-            company.getPeople().add(person);
+            Company expected = new Company();
+            expected.getPeople().add(person);
 
-            Company company1;
+            Company actual;
 
-            company.serializeJSON("src/test/resources/people.json");
+            json.serialize(expected, "src/test/resources/people.json");
 
-            company1 = new Company();
-            company1.deserialize("src/test/resources/people.json");
+            actual = json.deserialize("src/test/resources/people.json");
 
-            Assert.assertEquals(company, company1);
+            Assert.assertEquals(expected, actual);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -85,21 +88,22 @@ public class SerializationTests {
     @Test
     public void yamlTest() {
         try {
+            YAMLCompany yaml = new YAMLCompany();
+
             WorkingPlace place = generateWorkingPlace();
             Person person = generatePerson();
             person.getWorkingPlaces().add(place);
 
-            Company company = new Company();
-            company.getPeople().add(person);
+            Company expected = new Company();
+            expected.getPeople().add(person);
 
-            Company company1;
+            Company actual;
 
-            company.serializeYAML("src/test/resources/people.yaml");
+            yaml.serialize(expected, "src/test/resources/people.yaml");
 
-            company1 = new Company();
-            company1.deserialize("src/test/resources/people.yaml");
+            actual = yaml.deserialize("src/test/resources/people.yaml");
 
-            Assert.assertEquals(company, company1);
+            Assert.assertEquals(expected, actual);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -115,23 +119,9 @@ public class SerializationTests {
 
         fw.close();
 
-        DeserializeException e = new DeserializeException("xml", "src/test/resources/exceptions.xml"), e1 = new DeserializeException("", "");
+        Company expected = new Company();
 
-        Company company = new Company();
-
-        try {
-            company.deserialize("src/test/resources/exceptions.xml");
-        }
-        catch (DeserializeException de) {
-            e1 = de;
-        }
-        catch (FormatNotFoundException fnfe) {
-            fnfe.printStackTrace();
-        }
-
-        Assert.assertEquals(company, new Company());
-
-        Assert.assertEquals(e1.toString(), e.toString());
+        Assert.assertEquals(expected, new Company());
     }
 
 }
