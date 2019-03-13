@@ -6,6 +6,8 @@ import exceptions.FormatNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DateParser {
 
@@ -15,6 +17,8 @@ public class DateParser {
 
     public static LocalDate parse(String date) throws DateParserException
     {
+        Logger log = Logger.getLogger(DateParser.class.getName());
+
         LocalDate localDate = null;
 
         for(String format : formats)
@@ -25,6 +29,7 @@ public class DateParser {
             }
             catch (DateTimeParseException e)
             {
+                log.log(Level.WARNING, e.getMessage());
             }
         }
 
