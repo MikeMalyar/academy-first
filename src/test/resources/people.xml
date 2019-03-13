@@ -3,45 +3,22 @@
     <people>
         <person>
             <id>0</id>
-            <name>John</name>
-            <surname>Doe</surname>
-            <birthdate>2019-03-12</birthdate>
-            <address>London</address>
-            <phoneNumber>+38 050 05 05 050</phoneNumber>
-            <email>john_doe@gmail.com</email>
+            <name>Mike</name>
+            <surname>Malyarchuk</surname>
+            <birthdate>1999-07-05</birthdate>
+            <address>Ruska str, 287</address>
+            <phoneNumber>+38 099 99 099 099</phoneNumber>
+            <email>___@gmail.com</email>
             <courses>
                 <course>Java</course>
-                <course>Python</course>
             </courses>
             <workingPlaces>
                 <workingPlace>
                     <id>0</id>
-                    <begin>2019-03-12</begin>
-                    <end>2019-03-12</end>
-                    <title>SharpMinds</title>
-                    <jobPosition>ProjectManager</jobPosition>
-                </workingPlace>
-            </workingPlaces>
-        </person>
-        <person>
-            <id>0</id>
-            <name>John</name>
-            <surname>Doe</surname>
-            <birthdate>2019-03-12</birthdate>
-            <address>London</address>
-            <phoneNumber>+38 050 05 05 050</phoneNumber>
-            <email>john_doe@gmail.com</email>
-            <courses>
-                <course>Java</course>
-                <course>Python</course>
-            </courses>
-            <workingPlaces>
-                <workingPlace>
-                    <id>0</id>
-                    <begin>2019-03-12</begin>
-                    <end>2019-03-12</end>
-                    <title>SharpMinds</title>
-                    <jobPosition>ProjectManager</jobPosition>
+                    <begin>2017-01-01</begin>
+                    <end>2018-01-01</end>
+                    <title>SoftServe</title>
+                    <jobPosition>Developer</jobPosition>
                 </workingPlace>
             </workingPlaces>
         </person>

@@ -1,9 +1,7 @@
+import exceptions.DateParserException;
 import exceptions.DeserializeException;
 import exceptions.FormatNotFoundException;
-import models.Company;
-import models.JobPosition;
-import models.Person;
-import models.WorkingPlace;
+import models.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,33 +11,47 @@ import java.io.IOException;
 
 public class SerializationTests {
 
-    @Test
-    public void xmlTest() {
+    private Person generatePerson() throws DateParserException {
+        Person person = new Person();
+        person.setName("Mike");
+        person.setSurname("Malyarchuk");
+        person.setBirthdate("1999-07-05");
+        person.setAddress("Ruska str, 287");
+        person.setPhoneNumber("+38 099 99 099 099");
+        person.setEmail("___@gmail.com");
+        person.getCourses().add(Course.Java);
+
+        return person;
+    }
+
+    private WorkingPlace generateWorkingPlace() throws DateParserException {
         WorkingPlace place = new WorkingPlace();
+        place.setBegin("2017-01-01");
+        place.setEnd("2018-01-01");
         place.setTitle("SoftServe");
         place.setJobPosition(JobPosition.Developer);
-        WorkingPlace place1 = new WorkingPlace();
-        place1.setTitle("SharpMinds");
-        place1.setJobPosition(JobPosition.ProjectManager);
 
-        Person person = new Person();
-        person.getWorkingPlaces().add(place1);
-        Person person1 = new Person();
-        person1.getWorkingPlaces().add(place1);
+        return place;
+    }
 
-        Company company = new Company();
-        company.getPeople().add(person);
-        company.getPeople().add(person1);
-
-        Company company1;
-
+    @Test
+    public void xmlTest() {
         try {
+            WorkingPlace place = generateWorkingPlace();
+            Person person = generatePerson();
+            person.getWorkingPlaces().add(place);
+
+            Company company = new Company();
+            company.getPeople().add(person);
+
+            Company company1;
+
             company.serializeXML("src/test/resources/people.xml");
 
             company1 = new Company();
             company1.deserialize("src/test/resources/people.xml");
 
-            Assert.assertEquals(person, person1);
+            Assert.assertEquals(company, company1);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -48,31 +60,22 @@ public class SerializationTests {
 
     @Test
     public void jsonTest() {
-        WorkingPlace place = new WorkingPlace();
-        place.setTitle("SoftServe");
-        place.setJobPosition(JobPosition.Developer);
-        WorkingPlace place1 = new WorkingPlace();
-        place1.setTitle("SharpMinds");
-        place1.setJobPosition(JobPosition.ProjectManager);
-
-        Person person = new Person();
-        person.getWorkingPlaces().add(place1);
-        Person person1 = new Person();
-        person1.getWorkingPlaces().add(place1);
-
-        Company company = new Company();
-        company.getPeople().add(person);
-        company.getPeople().add(person1);
-
-        Company company1;
-
         try {
+            WorkingPlace place = generateWorkingPlace();
+            Person person = generatePerson();
+            person.getWorkingPlaces().add(place);
+
+            Company company = new Company();
+            company.getPeople().add(person);
+
+            Company company1;
+
             company.serializeJSON("src/test/resources/people.json");
 
             company1 = new Company();
             company1.deserialize("src/test/resources/people.json");
 
-            Assert.assertEquals(person, person1);
+            Assert.assertEquals(company, company1);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -81,31 +84,22 @@ public class SerializationTests {
 
     @Test
     public void yamlTest() {
-        WorkingPlace place = new WorkingPlace();
-        place.setTitle("SoftServe");
-        place.setJobPosition(JobPosition.Developer);
-        WorkingPlace place1 = new WorkingPlace();
-        place1.setTitle("SharpMinds");
-        place1.setJobPosition(JobPosition.ProjectManager);
-
-        Person person = new Person();
-        person.getWorkingPlaces().add(place1);
-        Person person1 = new Person();
-        person1.getWorkingPlaces().add(place1);
-
-        Company company = new Company();
-        company.getPeople().add(person);
-        company.getPeople().add(person1);
-
-        Company company1;
-
         try {
+            WorkingPlace place = generateWorkingPlace();
+            Person person = generatePerson();
+            person.getWorkingPlaces().add(place);
+
+            Company company = new Company();
+            company.getPeople().add(person);
+
+            Company company1;
+
             company.serializeYAML("src/test/resources/people.yaml");
 
             company1 = new Company();
             company1.deserialize("src/test/resources/people.yaml");
 
-            Assert.assertEquals(person, person1);
+            Assert.assertEquals(company, company1);
         }
         catch (Exception e) {
             e.printStackTrace();
